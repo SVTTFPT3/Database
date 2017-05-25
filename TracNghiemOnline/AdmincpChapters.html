@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Admin cp Chapters</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <script src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap-3.1.1.min.js"></script>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="chapters">
+                <div class="chapters-header">
+                    Quản lí chương
+                </div>
+                <div class="chapters-searching">
+                    <div class="chapters-searching-header">Tìm kiếm nâng cao</div>
+                    <div class="chapters-searching-body">
+                        <div class="row">
+                            <form action="" method="">
+                                <div class="col-sm-3">
+                                    <select class="form-control" name="">
+                                        <option value="-1">Tìm kiếm theo</option>
+                		                <option value="">ID chương</option>
+                                        <option value="">Tên chương</option>
+                                        <option value="">Nội dung chương</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" name="" placeholder="Nhập giá trị cần tìm kiếm" required = "true">
+                                </div>
+                                <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="chapters-list">
+                    <table class="table-striped table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ID chương
+                                    <a href="">
+								        <span class="glyphicon glyphicon-triangle-top"></span>
+							        </a> 
+                                </th>
+                                <th>
+                                    Tên chương
+                                    <a href="">
+								        <span class="glyphicon glyphicon-triangle-top"></span>
+							        </a> 
+                                </th>
+                                <th>Nội dung chương</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Chương 1</td>
+                                <td>Việt Nam những năm ....</td>
+                                <td>
+                                    <a href="#" data-toggle="modal" data-target="#editChapter-Modal">
+								        <span class="glyphicon glyphicon-pencil"></span>
+							        </a> 
+							        <a href="" style="margin-left: 30px;" data-toggle="modal" data-target="#deleteChapter-Modal">
+								        <span class="glyphicon glyphicon-trash"></span>
+							        </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Chương 2</td>
+                                <td>Việt Nam những năm ....</td>
+                                <td>
+                                    <a href="#" data-toggle="modal" data-target="#editChapter-Modal">
+								        <span class="glyphicon glyphicon-pencil"></span>
+							        </a> 
+							        <a href="#" style="margin-left: 30px;" data-toggle="modal" data-target="#deleteChapter-Modal">
+								        <span class="glyphicon glyphicon-trash"></span>
+							        </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Chương 3</td>
+                                <td>Việt Nam những năm ....</td>
+                                <td>
+                                    <a href="#" data-toggle="modal" data-target="#editChapter-Modal">
+								        <span class="glyphicon glyphicon-pencil"></span>
+							        </a> 
+							        <a href="" style="margin-left: 30px;" data-toggle="modal" data-target="#deleteChapter-Modal">
+								        <span class="glyphicon glyphicon-trash"></span>
+							        </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="breaker"></div>
+                <div class="breaker"></div>
+                <div class="col-sm-3 addNewChapter">
+                    <button class="btn btn-default q-btn" type="submit" value="submit" name="submit" data-toggle="modal" data-target="#addChapter-Modal">Thêm chương</button>
+                </div>
+            </div>
+            <!-- Modal -->
+
+            <!-- Edit Chapter Modal -->
+            <div class="modal fade" id="editChapter-Modal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal-content -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Sửa chương</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="get">
+                                <div class="row form-group">
+                                    <label class="col-sm-4">Tên chương:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="chapterName" value="" required/>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4">Nội dung chương:</label>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-controll" rows="4" name="chapterContent" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="row form-group text-center">
+                                    <div class="col-sm-6">
+                                        <button class="btn btn-default q-btn" type="submit" value="submit" name="submit">Sửa chương</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button class="btn btn-default q-btn" data-dismiss="modal">Hủy bỏ</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Chapter Modal -->
+            <div class="modal fade" id="deleteChapter-Modal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal-content -->
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <h4>Bạn có chắc chắn muốn xóa chương xyz?</h4>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <a class="btn btn-default q-btn" href="">Đồng ý</a>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button class="btn btn-default q-btn" data-dismiss="modal">Hủy bỏ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Chapter Modal -->
+            <div class="modal fade" id="addChapter-Modal" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal-content -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Thêm chương</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="get">
+                                <div class="row form-group">
+                                    <label class="col-sm-4">Tên chương:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="chapterName" value="" required/>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4">Nội dung chương:</label>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-controll" rows="4" name="chapterContent" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="row form-group text-center">
+                                    <div class="col-sm-6">
+                                        <button class="btn btn-default q-btn" type="submit" value="submit" name="submit">Thêm chương</button>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button class="btn btn-default q-btn" data-dismiss="modal">Hủy bỏ</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
