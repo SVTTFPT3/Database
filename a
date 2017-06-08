@@ -1,0 +1,135 @@
+package action;
+
+import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import model.BO.TestKitBO;
+import model.BO.UserBO;
+import model.bean.Question;
+import model.bean.User;
+
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+import form.TestKitForm;
+
+public class FinishTestAction extends Action{
+
+	@Override
+	public ActionForward execute(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+					throws Exception {
+		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
+		TestKitForm testKitForm = (TestKitForm)form;
+		String result=testKitForm.getResult();
+		String idString = testKitForm.getIdString();
+		String[] idArray = idString.split(",");
+		ArrayList<Integer> iIDArray= new ArrayList<Integer>();
+
+		int score=0,correctNumner=0;
+		if(result.equals(null)||result.equals(""))
+		{
+			System.out.println("result"+result);
+			request.setAttribute("score", score);
+			return mapping.findForward("success");
+		}
+		for(int i=0;i<idArray.length;i++)
+		{
+			int idNumber=0,tIDNumber =Integer.parseInt(idArray[i]);
+			if(tIDNumber>100)
+				idNumber = tIDNumber/100;
+			else if(tIDNumber>=1000)
+				idNumber = tIDNumber/1000;
+			else idNumber = tIDNumber/10000;
+			iIDArray.add(idNumber);
+		}
+
+		System.out.println("run finish action loop");
+		HttpSession session =  request.getSession();
+		ArrayList<Question> questionLista = (ArrayList<Question>) session.getAttribute("questionListAttr");
+		try{
+
+			if(iIDArray.size()>1)
+			{
+				int i;
+				for(i=0;i<iIDArray.size()-1;i++)
+				{
+					if(i!=iIDArray.size()-1 && iIDArray.get(i)!=iIDArray.get(i+1))
+						if(questionLista.get(iIDArray.get(i)-1).getCorrectOption().equals(""+result.charAt(i)))
+						{
+							System.out.println("+10");
+							score+=10;
+							correctNumner++;
+							System.out.println(questionLista.get(iIDArray.get(i)-1).getQuestionContent()+"   "+questionLista.get(iIDArray.get(i)-1).getCorrectOption());
+						}
+
+					System.out.println(questionLista.get(iIDArray.get(i)-1).getCorrectOption()+" "+result.charAt(i));
+				}
+				if(i==iIDArray.size()-1 && iIDArray.get(i)==iIDArray.get(i-1))
+					if(questionLista.get(iIDArray.get(i)-1).getCorrectOption().equals(""+result.charAt(i)))
+					{
+						System.out.println(questionLista.get(iIDArray.get(i)-1).getQuestionContent()+"   "+questionLista.get(iIDArray.get(i)-1).getCorrectOption());
+						System.out.println("+10");
+						score+=10;
+						correctNumner++;
+					}
+				if(questionLista.get(iIDArray.get(i)-1).getCorrectOption().equals(""+result.charAt(i-1)))
+				{
+					System.out.println(-10);
+					score-=10;
+					correctNumner--;
+				}
+				if(questionLista.get(iIDArray.get(i)-1).getCorrectOption().equals(""+result.charAt(i)))
+				{
+					System.out.println(questionLista.get(iIDArray.get(i)-1).getQuestionContent()+"   "+questionLista.get(iIDArray.get(i)-1).getCorrectOption());
+					score+=10;
+					correctNumner++;
+					System.out.println("last score");
+				}
+			}
+			else
+			{
+				if(questionLista.get(iIDArray.get(0)-1).getCorrectOption().equals(""+result.charAt(0))){
+					score+=10;
+					correctNumner++;
+				}
+			}
+
+			System.out.println("c"+correctNumner);
+			request.setAttribute("correctNumber", correctNumner+"/"+testKitForm.getQuestionNum()+" c�u");
+			request.setAttribute("score", score);
+			TestKitBO testKitBO = new TestKitBO();
+			String email = (String)session.getAttribute("email");
+			UserBO userBO = new UserBO();
+			User user = new User();
+			user = userBO.getUser(email);
+			System.out.println("store in datatbase");
+			int userID = user.getUserID();
+			int numberOfQuestion =Integer.parseInt(testKitForm.getQuestionNum());
+			System.out.println("loi ques num");
+			int numberOfEasy = Integer.parseInt(testKitForm.getEasyNum());
+			System.out.println("loi ez num");
+			int numberOfMedium = Integer.parseInt(testKitForm.getMediumNum());
+			System.out.println("loi medi num");
+			int time = Integer.parseInt(testKitForm.getFinishTime());
+			System.out.println("loi time num");
+			
+			System.out.println("userID "+userID+", num ques "+numberOfQuestion+",numberOfEasy "+numberOfEasy+",numberOfMedium"+numberOfMedium+",time"+time);
+			
+			testKitBO.createTestKit("", userID, score, numberOfQuestion, correctNumner, numberOfEasy, numberOfMedium, time);
+			return mapping.findForward("success");
+
+		}catch(Exception e)
+		{
+			System.out.println("calculate score fail");
+		}
+		return mapping.findForward("success");
+	}
+
+}
